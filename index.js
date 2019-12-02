@@ -6,8 +6,7 @@ const resolers = require('./src/resolvers');
 
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGO_URL,
-{
+mongoose.connect(process.env.MONGO_URL,{
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,

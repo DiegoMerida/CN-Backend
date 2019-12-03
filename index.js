@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const { GraphQLServer } = require('graphql-yoga');
 const { importSchema } = require('graphql-import');
-const resolers = require('./src/resolvers');
+const resolvers = require('./src/resolvers');
 
 const mongoose = require('mongoose');
 
@@ -20,6 +20,6 @@ mongo.on('error', (error) => console.log(error))
 
 const typeDefs = importSchema( __dirname + '/schema.graphql');
 
-const server = new GraphQLServer({typeDefs, resolvers});
+const server = new GraphQLServer();
 
 server.start(()=> console.log('works! = u ='));

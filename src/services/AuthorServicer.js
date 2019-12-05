@@ -1,4 +1,4 @@
-const { Authors } = require('.././models/author');
+const { Authors } = require('../models/Author');
 
 const getAllAuthors = () => Authors.find({is_active:true});
 

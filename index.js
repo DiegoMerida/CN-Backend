@@ -20,6 +20,6 @@ mongo.on('error', (error) => console.log(error))
 
 const typeDefs = importSchema( __dirname + '/schema.graphql');
 
-const server = new GraphQLServer();
+const server = new GraphQLServer({typeDefs, resolvers});
 
 server.start(()=> console.log('works! = u ='));

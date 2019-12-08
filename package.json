@@ -4,7 +4,11 @@
   "description": "backend ",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "dev": "nodemon index.js -f *.graphql",
+=======
+    "start": "node index.js",
+>>>>>>> e1fba63f892e0ed9de033e128f81fc4734783bfa
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,6 +17,7 @@
   "author": "Diego Merida",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "graphql-yoga": "^1.18.3"
   },
   "devDependencies": {

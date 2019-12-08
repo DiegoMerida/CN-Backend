@@ -1,0 +1,52 @@
+type Querry 
+{
+    getPlayer: [Player]!
+    getOnePlayer(id:ID):Player!
+}
+
+type mutation 
+{
+    createNewPlayer(data:AuthorInput!):Player! 
+    updateOnePlayer(id:ID!, data:AuthorInputUpdate!):Player!
+    deleteOnePlayer(id:ID!)String!
+    createNewRoom(data:RoomImput): Room!
+}
+
+type 
+
+type Player
+{
+    _id:ID!
+    email:String!
+    birth_date:String!
+    profile_pic:String!
+    main_champ:String!
+    main_rol:String!
+    summoner_name:String!
+    discord:String!
+}
+
+type PlayerInput
+{
+    email:String!
+    password:String!
+    birth_date:String!
+    profile_pic:String
+    main_champ:String
+    main_rol:String
+    discord:String
+    summoner_name:String!
+}
+
+type PlayerInputUpdate
+{
+    email:String
+    password:String
+    birth_date:String
+    profile_pic:String
+    main_champ:String
+    main_rol:String
+    discord:String
+    summoner_name:String
+}
+

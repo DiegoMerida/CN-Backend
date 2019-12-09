@@ -8,18 +8,17 @@ const RoomChatSchema = new Schema
     {
         type: String,
         required: true,
-    }
-    
+    },
     Player: 
     {
         type: Schema.Types.ObjectId,
-        ref: 'player'
+        ref: 'player',
     },
     is_active: 
     {
         type: Boolean,
-        default: true
-    }
+        default: true,
+    },
 }, {
     timestamps: true
 });

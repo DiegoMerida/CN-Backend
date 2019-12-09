@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const Schema = mongoose.Schema;
 
-const AuthorSchema = new Schema(
+const PlayerSchema = new Schema(
 {
     email:
     {
@@ -29,6 +29,10 @@ const AuthorSchema = new Schema(
         type: String,
     },
     main_rol:
+    {
+        type: String,
+    },
+    second_rol:
     {
         type: String,
     },
@@ -61,4 +65,4 @@ AuthorSchema.pre('save', function(next){
     });
 });
 
-module.exports = mongoose.model('player', AuthorSchema);
+module.exports = mongoose.model('player', PlayerSchema);

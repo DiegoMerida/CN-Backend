@@ -2,17 +2,27 @@ type Querry
 {
     getPlayer: [Player]!
     getOnePlayer(id:ID):Player!
+
+    getposts: [Posts]!
+    getOnePost(id:ID):Posts!
+
+    getChat(id:ID):Chat!
 }
 
 type mutation 
 {
     createNewPlayer(data:AuthorInput!):Player! 
     updateOnePlayer(id:ID!, data:AuthorInputUpdate!):Player!
-    deleteOnePlayer(id:ID!)String!
-    createNewRoom(data:RoomImput): Room!
-}
+    deleteOnePlayer(id:ID!):String!
 
-type 
+    createNewPost(data:PostImput):Post!
+    updateOnePost(id:ID!, data:PostInputUpdate!):Post! 
+    deleteOnePost(id:ID!):String!
+
+    createNewChat(data:ChatInput):Chat!
+    updateOneChat(id:ID!, data:ChatInputUpdate!):Chat!
+    deleteOneCHat(id:ID):String!
+}
 
 type Player
 {
@@ -22,11 +32,12 @@ type Player
     profile_pic:String!
     main_champ:String!
     main_rol:String!
+    second_rol:String!
     summoner_name:String!
     discord:String!
 }
 
-type PlayerInput
+input PlayerInput
 {
     email:String!
     password:String!
@@ -34,11 +45,12 @@ type PlayerInput
     profile_pic:String
     main_champ:String
     main_rol:String
+    second_rol:String
     discord:String
     summoner_name:String!
 }
 
-type PlayerInputUpdate
+input PlayerInputUpdate
 {
     email:String
     password:String
@@ -50,3 +62,12 @@ type PlayerInputUpdate
     summoner_name:String
 }
 
+type Post
+{
+    _id:ID!
+    title: String!
+    content:String!
+    author: Player
+    cover: URL!
+    is_active: Boolean
+}

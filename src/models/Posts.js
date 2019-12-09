@@ -36,6 +36,11 @@ const PostSchema = new Schema({
         type: Boolean,
         default: true,
     },
+    reply:
+    {
+        type: [Schems.Types.ObjectId],
+        ref: 'Posts'
+    },
 }, {
     timestamps: true,
 });

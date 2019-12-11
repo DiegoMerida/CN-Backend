@@ -1,6 +1,6 @@
 type Querry 
 {
-    getPlayer: [Player]!
+    getPlayers: [Player]!
     getOnePlayer(id:ID):Player!
 
     getposts: [Posts]!
@@ -66,8 +66,33 @@ type Post
 {
     _id:ID!
     title: String!
-    content:String!
+    content: String!
     author: Player
     cover: URL!
+    is_active: Boolean
+}
+
+input PostImput
+{
+    title: String!
+    content: String!
+    author: ID!
+    cover: Upload   
+    is_active: Boolean
+}
+
+input PostInputUpdate
+{
+    title: String
+    content:String
+    cover: Upload
+    liked_by: String
+    is_active: Boolean
+}
+
+type Chat
+{
+    id:ID!
+    Player: Player!
     is_active: Boolean
 }

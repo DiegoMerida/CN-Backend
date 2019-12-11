@@ -1,8 +1,10 @@
-const Authors = require('./Author');
+const Player = require('./Author');
 const Posts = require('./Posts');
+const Chat = require('./Chat')
 
-module.exports = {
-    player,
-    posts,
-    roomChat,
+module.exports = 
+{
+    Player,
+    Posts,
+    Chat,
 };       

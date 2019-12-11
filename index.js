@@ -1,60 +1,48 @@
+require('dotenv').config();
+
 const { GraphQLServer } = require('graphql-yoga');
+const { importSchema } = require('graphql-import');
+const { makeExecutableSchema } = require('graphql-tools');
+const resolvers = require('./src/resolvers');
+const AuthDirective = require('./src/resolvers/Directives/AuthDirectives');
+const verifyToken = require('./src/utils/verifyToken');
 
-const typeDefs  = 
-`
-    type Query 
-    {
-        hello(name:String!):String!
-        getUsers: [User]!
-        getOneUser: [User]!
-    }
-    type Mutation
-    {
-        createUser (name:String!, age:Int!):User
-    }
-    type User
-    {
-        id:Int!
-        name:String!
-        age:Int!
-    }
-`;
+const mongoose = require('mongoose');
 
-const users = [];
+const MONGO_URI = process.env.NODE_ENV === 'test' ?
+    process.env.MONGO_TEST_URL: process.env.MONGO_URL;
 
-const resolvers=
-{
-    Query:
-    {
-        hello: (root, params, context, info) => `hola ${params.name}`,
-        getUsers: (root, params, context, info) => users,
-        getOneUser: (root, params, context, info) => users,
-    },
-    Mutation:
-    {
-        createUser:(root, params, context, info ) => 
-        {
-            const User =
-            {
-                id: users.length +1,
-                name: params.name,
-                age: params.age,
-            };
-            users.push(User);
-            return User;
-        }
-    }
-};
-
-//root -> traer la informacion del servidor de graphql 
-//params -> son los datos que envia el cliente y que se define en nuesto typedefs
-//contex -> objeto por el cual  se comunican los resolvers (auth)
-//info -> el query que se ejecutó en el cliente 
-
-const server = new GraphQLServer
-({
-    typeDefs,
-    resolvers,
+mongoose.connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
 });
 
-server.start(() => console.log('Trabajando con GraphQL'))
+const mongo = mongoose.connection;
+
+mongo.on('error', (error) => console.log(error))
+    .once('open', () => console.log('Connected to database'));
+
+const typeDefs = importSchema( __dirname + '/schema.graphql');
+
+const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers,
+    schemaDirectives: {
+        AuthDirective,
+    },
+});
+const server = new GraphQLServer({
+    schema,
+    context: async (contextParams) => ({
+        ...contextParams,
+        user: contextParams.request ? await verifyToken(contextParams.request) : {},
+    }),
+});
+// root, params, context, info
+const port = process.env.PORT || 4000;
+
+server.start({port},()=> console.log(`works! = u = in port ${port}`));
+
+module.exports = { schema };
+
